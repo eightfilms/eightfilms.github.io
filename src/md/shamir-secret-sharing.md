@@ -52,13 +52,13 @@ $$
 
 where
 
-<center>$\delta_5(x)$ = if $x == 5$ then $5$ else $0$</center>
+<center>$\delta_5(x)$ = if $x == 5$ then $3$ else $0$</center>
 
-<center>$\delta_7(x)$ = if $x == 7$ then $7$ else $0$</center>
+<center>$\delta_7(x)$ = if $x == 7$ then $2$ else $0$</center>
 
-<center>$\delta_{12}(x)$ = if $x == 12$ then $12$ else $0$</center>
+<center>$\delta_{12}(x)$ = if $x == 12$ then $6$ else $0$</center>
 
-<center>$\delta_{30}(x)$ = if $x == 30$ then $30$ else $0$</center>
+<center>$\delta_{30}(x)$ = if $x == 30$ then $15$ else $0$</center>
 
 Note that in the above we can simplify the result of $delta_i(x)$ even further due to the common if-else expression. Let's do that by making them return 1 if the condition holds:
 
@@ -74,7 +74,7 @@ Note that in the above we can simplify the result of $delta_i(x)$ even further d
 Our function $f$ now looks like:
 
 $$
-f = 5\delta_5(x) + 7\delta_7(x) + 12\delta_{12}(x) + 30\delta_{30}(x)
+f = 3\delta_5(x) + 2\delta_7(x) + 6\delta_{12}(x) + 15\delta_{30}(x)
 $$
 
 After we simplified the above, notice that we can generalize our $\delta$ function:
