@@ -3,7 +3,7 @@ date: 2024-06-16
 ---
 
 Curiosity led me to study about [Multi-Party Computation](https://en.wikipedia.org/wiki/Secure_multi-party_computation) (or MPC), so I implemented a [simple
-Shamir's Secret Sharing scheme in Zig]().
+Shamir's Secret Sharing scheme in Zig](https://github.com/eightfilms/shamir-zig).
 
 # Overview
 
