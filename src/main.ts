@@ -18,7 +18,6 @@ async function build() {
 
     const posts = await collect_posts();
     await update_file("out/index.html", templates.post_list(posts).value);
-    await update_file("out/index.html", templates.post_list(posts).value);
     for (const post of posts) {
       await update_file(`./out/${post.path}`,
             templates.post(post, false).value,
@@ -123,7 +122,8 @@ async function collect_posts(): Promise<Post[]> {
         content: html,
       });
     }
-    return posts;
+
+    return posts.sort((d1, d2) => d2.date - d1.date);
 }
 
 async function serve() {
