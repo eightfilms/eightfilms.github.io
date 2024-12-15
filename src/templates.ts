@@ -121,7 +121,9 @@ export const post_list = (posts: Post[]): HtmlString => {
     title: "bing",
     description: blurb,
     src: "/src/templates.ts",
-    content: html`<ul class="post-list">${list_items}</ul>`,
+    content: html`
+<ul class="post-list">${list_items}</ul>
+`,
   });
 };
 
