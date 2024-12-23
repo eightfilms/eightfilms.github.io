@@ -16,13 +16,20 @@ async function build() {
      await update_path(path);
     }
 
-    const posts = await collect_posts();
-    await update_file("out/index.html", templates.post_list(posts).value);
-    for (const post of posts) {
+    const tech_posts = await collect_posts("tech");
+    const ramblings = await collect_posts("ramblings");
+    await update_file("out/index.html", templates.post_list(["tech", "ramblings"], [tech_posts, ramblings]).value);
+    for (const post of tech_posts) {
       await update_file(`./out/${post.path}`,
             templates.post(post, false).value,
       )
     }
+    for (const post of ramblings) {
+      await update_file(`./out/${post.path}`,
+            templates.post(post, false).value,
+      )
+    }
+
     const pages = ["about", "favourites"];
     for (const page of pages) {
     const file = Bun.file(`content/${page}.dj`);
@@ -79,15 +86,15 @@ export type Post = {
 //  content: HtmlString;
 //};
 
-async function collect_posts(): Promise<Post[]> {
+async function collect_posts(category: string): Promise<Post[]> {
     const start = performance.now();
     const posts = [];
 
-    const dir_entries = await readdirSync("./content/posts", { recursive: true, withFileTypes: true, });
+    const dir_entries = await readdirSync("./content/" + category, { recursive: true, withFileTypes: true, });
     const end = performance.now() - start;
 
     for (const f of dir_entries.filter(dir_entry => dir_entry.isFile()).map(dir_entry => dir_entry.name)) {
-      const path = join("./content/posts", f)
+      const path = join("./content/" + category, f)
       
       if (stat(path, (err, stats) => { return stats.isDirectory()})) {
         continue;
@@ -117,7 +124,7 @@ async function collect_posts(): Promise<Post[]> {
         month,
         day,
         date,
-        path: `/${y}/${m}/${d}/${slug}.html`,
+        path: `/${category}/${y}/${m}/${d}/${slug}.html`,
         title: render_ctx.title,
         content: html,
       });

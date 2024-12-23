@@ -108,13 +108,27 @@ export const base = (
 </html>
 `;
 
-export const post_list = (posts: Post[]): HtmlString => {
-  const list_items = posts.map((post) =>
-    html`
-<li>
-  <a href="${post.path}">${post.title}</a> ${time(post.date, "meta")}
-</li>`
-  );
+export const post_list = (categories: string[], posts_: Post[][]): HtmlString => {
+  var lists = [] 
+  for (var i=0; i < posts_.length; i+=1) {
+    const list_items = posts_[i].map((post) =>
+      html`
+  <li>
+    <a href="${post.path}">${post.title}</a> ${time(post.date, "meta")}
+  </li>`
+    );
+    lists.push(list_items)
+  }
+
+  var posts_by_category = []
+  for (var i=0; i < categories.length; i+=1) {
+    if (lists[i].length == 0) continue;
+    const list = html`
+<h2>${categories[i]}</h2>
+<ul class="post-list">${lists[i]}</ul>
+`
+    posts_by_category.push(list)
+  }
 
   return base({
     path: "",
@@ -122,7 +136,7 @@ export const post_list = (posts: Post[]): HtmlString => {
     description: blurb,
     src: "/src/templates.ts",
     content: html`
-<ul class="post-list">${list_items}</ul>
+${posts_by_category}
 `,
   });
 };

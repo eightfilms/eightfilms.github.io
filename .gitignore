@@ -1,3 +1,4 @@
 src/bloggen/bloggen
 /out
 /node_modules
+/drafts
