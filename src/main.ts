@@ -1,7 +1,7 @@
 import * as djot from "./djot.ts";
 import * as templates from "./templates.ts";
 import { mkdir } from "node:fs/promises";
-import { readdirSync } from "node:fs";
+import { readdirSync, existsSync } from "node:fs";
 import { stat } from "node:fs";
 import { join } from "node:path";
 
@@ -89,6 +89,7 @@ export type Post = {
 async function collect_posts(category: string): Promise<Post[]> {
     const start = performance.now();
     const posts = [];
+    if (!existsSync("./content/" + category)) return posts;
 
     const dir_entries = await readdirSync("./content/" + category, { recursive: true, withFileTypes: true, });
     const end = performance.now() - start;
